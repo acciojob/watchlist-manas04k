@@ -3,18 +3,15 @@ package com.driver;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Repository
 @Component
 public class MovieRepository {
-    HashMap<String, Movie> movies = new HashMap<>();
-    HashMap<String, Director> directors = new HashMap<>();
-    HashMap<String, String> movieDirectorPair = new HashMap<>();
-    List<String> list = new ArrayList<>();
+    Map<String, Movie> movies = new HashMap<>();
+    Map<String, Director> directors = new HashMap<>();
+    Map<String, String> movieDirectorPair = new HashMap<>();
+//    List<String> list = new ArrayList<>();
 
 
     public void addMovieinDB(Movie movie){
@@ -44,30 +41,32 @@ public class MovieRepository {
         List<String> listofMovies = new ArrayList<>();
         for(String moviename:movieDirectorPair.keySet()){
             if(movieDirectorPair.get(moviename).equals(directorName)){
-                list.add(moviename);
+                listofMovies.add(moviename);
             }
         }
 
-        return list;
+        return listofMovies;
     }
 
     public List<String> getListofAllMoviesfromDB(){
         List<String> movieList = new ArrayList<>();
         for(String movieName:movies.keySet()){
-            list.add(movieName);
+            movieList.add(movieName);
         }
 
-        return list;
+        return movieList;
     }
 
     public void deleteMovieList(String directorName){
 //        HashSet<String> movielist = new HashSet<>();
         for(String moviename:movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(moviename).equals(directorName)){
-                if(movies.containsKey(moviename))
+            if(movieDirectorPair.get(moviename)==directorName){
+                if(movies.containsKey(moviename)) {
                     movies.remove(moviename);
-                if(directors.containsKey(directorName))
+                }
+                if(directors.containsKey(directorName)){
                     directors.remove(directorName);
+                }
             }
         }
     }
